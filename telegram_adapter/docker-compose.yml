@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    # Используем официальный образ с уже встроенной Web-панелью управления (management)
+    image: rabbitmq:3.13-management-alpine
+    container_name: tg_adapter_local_rabbitmq
+    ports:
+      # Пробрасываем порты на ваш компьютер (ПК)
+      - "5672:5672"   # Порт для подключения Python-кода (aio-pika)
+      - "15672:15672" # Порт для входа в Web-панель управления в браузере
+    environment:
+      # Дефолтные настройки доступа для локальной разработки
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_VHOST: tg_system_vhost
+    volumes:
+      # Данные очередей сохранятся, даже если вы остановите контейнер
+      - local_rabbitmq_data:/var/lib/rabbitmq
+    restart: always
+
+volumes:
+  local_rabbitmq_data:
