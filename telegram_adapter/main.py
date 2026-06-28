@@ -6,7 +6,7 @@ import sys
 from loguru import logger
 
 from app.config import settings
-from app.services.client import bot
+from app.services.registry_client import bot
 
 # Настраиваем формат логирования для вывода в консоль
 logger.remove()  # Удаляем дефолтный обработчик, чтобы настроить свой
